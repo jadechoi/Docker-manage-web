@@ -1,0 +1,27 @@
+version: '3.7'
+
+services: 
+  nginx:
+    image: tnwjdrkwhr/myweb:blue
+    deploy: 
+      replicas: 3
+      placement: 
+        constraints: [node.role==worker] 
+      restart_policy: 
+        condition: on-failure 
+        max_attempts: 2  
+    environment: 
+      SERVICE_PORTS: 80
+
+  proxy: 
+    image: dockercloud/haproxy 
+    depends_on: 
+      - nginx
+    volumes: 
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports: 
+      - "80"         
+    deploy:
+      mode: global
+      placement: 
+        constraints: [node.role==manager]

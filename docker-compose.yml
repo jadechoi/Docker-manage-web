@@ -1,0 +1,75 @@
+version: "3"
+ 
+networks:
+  monitoring:
+ 
+services:
+  node:
+    image: prom/node-exporter:v0.14.0
+    ports:
+      - 9100:9100
+    networks:
+      - monitoring
+    volumes:
+      - /proc:/host/proc
+      - /sys:/host/sys
+      - /:/rootfs
+      - /etc/hostname:/etc/host_hostname
+    hostname: "{{.Node.ID}}"
+    environment:
+      HOST_HOSTNAME: /etc/host_hostname
+    command: -collector.procfs "/host/proc" -collector.sysfs /host/sys 
+             -collector.textfile.directory /etc/node-exporter/ 
+             -collectors.enabled 'conntrack,diskstats,entropy,filefd,filesystem,loadavg,mdadm,meminfo,netdev,netstat,stat,textfile,time,vmstat,ipvs' 
+             -collector.filesystem.ignored-mount-points "^/(sys|proc|dev|host|etc)($$|/)"
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: '0.10'
+          memory: 32M
+        reservations:
+          cpus: '0.10'
+          memory: 16M
+ 
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - monitoring
+    volumes:
+      - /tmp/prometheus.yml:/etc/prometheus/prometheus.yml
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.30'
+          memory: 512M
+        reservations:
+          cpus: '0.30'
+          memory: 128M
+ 
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    networks:
+      - monitoring
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 64M
+        reservations:
+          cpus: '0.50'
+          memory: 32M

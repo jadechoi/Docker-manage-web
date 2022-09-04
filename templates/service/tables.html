@@ -1,0 +1,75 @@
+{%extends 'base.html'%}
+{%block contents%}
+
+{% load static %}
+ <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">SERVICE LIST</h1>
+                    <p class="mb-4">You can see the "Service list"</p>
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Service List</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Name</th>
+                                            <th>Mode</th>
+                                            <th>Replicas</th>
+                                            <th>Image</th>
+					    <th>Ports</th>
+					    <th>Deploy Info</th>
+					    <th>Rollback</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+					    <tr>
+                                            <th>Id</th>
+                                            <th>Name</th>
+                                            <th>Mode</th>
+                                            <th>Replicas</th>
+                                            <th>Image</th>
+                                            <th>Ports</th>
+					    <th>Deploy Info</th>
+                                            <th>Rollback</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+					    {% for line in stacks %}
+					    <tr>
+						<td>{{ line.0 }}</td>
+						<td><a href="/service/update/{{ line.1 }}">{{ line.1 }}</a></td>
+						<td>{{ line.2 }}</td>
+						<td><a href="/service/scale/{{ line.1 }}">{{ line.3 }}</a></td>
+						<td>{{ line.4 }}</td>
+						<td>{{ line.5 }}</td>
+						
+						<td><a href="/service/list/{{ line.1 }}" class="btn btn-info btn-circle">
+                                        <i class="fas fa-info-circle"></i>
+							</a></td>
+							<td><a href="/service/rollback/{{ line.1 }}" class="btn btn-secondary btn-icon-split">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-arrow-right"></i>
+                                        </span>
+                                        <span class="text">Rollback</span>
+                                    </a></td>
+					    </tr>
+					    {% endfor %}
+                                    
+				   </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+{%endblock%}
