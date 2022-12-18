@@ -39,5 +39,6 @@ Swarm manage v1은 도커스웜 클러스터 환경에서 웹을 통해 도커�
   * 스웜클러스터 노드의 CPU, 메모리 사용량 확인
   
 ## 시스템 아키텍처
-![system]()
+<img width="985" alt="image" src="https://user-images.githubusercontent.com/96777428/208294660-c069c01e-543c-4338-8ec1-6aaf8287fc2c.png">
+
 
