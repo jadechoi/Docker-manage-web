@@ -1,12 +1,13 @@
 # Swarm manage v1 : Web을 통한 도커 관리 서비스
 Swarm manage v1은 도커스웜 클러스터 환경에서 웹을 통해 도커를 편리하게 관리할 수 있는 서비스 입니다. <br/>  
-[데모영상](https://youtu.be/SJI4mX-b7ug)
+[데모영상](https://youtu.be/SJI4mX-b7ug)<br/>
 ![mainpage]()
 
-## 개요
-* 
-* 어쩌구
-
+## 기술 스택
+- Infra : Docker Swarm Mode
+- BE : Django
+- FE : HTML, CSS, JS
+- Monitoring : Prometheus, Grafana
 
 ## 구현 기능
 - 스택
@@ -36,5 +37,5 @@ Swarm manage v1은 도커스웜 클러스터 환경에서 웹을 통해 도커�
   * 스웜클러스터 노드의 CPU, 메모리 사용량 확인
   
 ## 시스템 아키텍처
-## 
+![system]()
 
